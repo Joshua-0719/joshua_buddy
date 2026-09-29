@@ -11,7 +11,7 @@ class VaultWindow(QWidget):
         self.db = db_manager
         self.notes_data = {}  # Store full note dicts by ID
 
-        self.setWindowTitle("WhisperFlow - Vault")
+        self.setWindowTitle("Joshua Notes - Vault")
         self.resize(900, 640)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
@@ -101,7 +101,7 @@ class VaultWindow(QWidget):
         
         # ── Top Bar (Title + Search) ──
         top_bar = QHBoxLayout()
-        title = QLabel("WhisperFlow Vault")
+        title = QLabel("Joshua Notes")
         title.setStyleSheet("font-size: 23px; font-weight: 700; color: #172b32;")
 
         self.search_box = QLineEdit()

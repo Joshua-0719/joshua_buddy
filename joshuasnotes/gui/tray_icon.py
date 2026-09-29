@@ -11,18 +11,21 @@ class TrayIcon(QSystemTrayIcon):
         self.vault_window = vault_window
         self.engine = engine
         
-        # Create a minimalist app icon with a cyan accent to match the WhisperFlow aesthetic
+        # Draw a J glyph for the app's menu bar icon.
         pixmap = QPixmap(22, 22)
         pixmap.fill(Qt.GlobalColor.transparent)
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        painter.setBrush(QColor("#7dd3fc"))
-        painter.setPen(Qt.PenStyle.NoPen)
-        painter.drawEllipse(6, 6, 10, 10)
+        painter.setPen(QColor("#147d72"))
+        font = painter.font()
+        font.setPointSize(17)
+        font.setBold(True)
+        painter.setFont(font)
+        painter.drawText(pixmap.rect(), Qt.AlignmentFlag.AlignCenter, "J")
         painter.end()
 
         self.setIcon(QIcon(pixmap))
-        self.setToolTip("WhisperFlow")
+        self.setToolTip("Joshua Notes")
         
         # Build the menu
         self.menu = QMenu()
@@ -37,7 +40,7 @@ class TrayIcon(QSystemTrayIcon):
 
         self.menu.addSeparator()
 
-        self.quit_action = self.menu.addAction("Quit WhisperFlow")
+        self.quit_action = self.menu.addAction("Quit Joshua Notes")
         self.quit_action.triggered.connect(self.quit_app)
         
         self.setContextMenu(self.menu)

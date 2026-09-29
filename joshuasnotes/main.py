@@ -55,7 +55,7 @@ def main():
 
     # 6. Start the app
     engine.start_listening()
-    logging.info("WhisperFlow is running. Look for the menu bar icon!")
+    logging.info("Joshua Notes is running. Look for the menu bar icon!")
     
     # Enter the Qt main loop
     sys.exit(app.exec())

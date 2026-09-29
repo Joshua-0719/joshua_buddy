@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  AudioLines,
   Check,
   ChevronDown,
   Clock3,
@@ -21,7 +20,7 @@ import './styles.css';
 
 function connectDesktop(setBridge, setNotes, setStatus) {
   if (!window.qt?.webChannelTransport || !window.QWebChannel) return;
-  new window.QWebChannel(window.qt.webChannelTransport, ({ objects }) => {
+  window.QWebChannel(window.qt.webChannelTransport, ({ objects }) => {
     const api = objects.desktop;
     setBridge(api);
     api.getNotes((payload) => setNotes(JSON.parse(payload)));
@@ -99,14 +98,17 @@ function App() {
   };
 
   const isWorking = status === 'recording' || status === 'processing';
-  const statusText = status === 'recording' ? 'Listening' : status === 'processing' ? 'Transcribing' : 'Ready to capture';
+  const statusText = { recording: 'Listening', processing: 'Transcribing' }[status] || 'Ready to capture';
+  let emptyNotesTitle = 'A little room to think';
+  if (view === 'starred') emptyNotesTitle = 'No starred notes yet';
+  if (query) emptyNotesTitle = 'Nothing found';
 
   return (
     <motion.div className="app-shell" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
       <aside className="sidebar">
         <div className="brand-lockup">
-          <div className="brand-mark"><AudioLines size={19} strokeWidth={2.4} /></div>
-          <span>whisperflow</span>
+          <div className="brand-mark" aria-hidden="true">J</div>
+          <span>Joshua Notes</span>
         </div>
 
         <div className="workspace-label">YOUR SPACE</div>
@@ -161,10 +163,10 @@ function App() {
                 transition={{ duration: 0.2, delay: Math.min(index * 0.025, 0.15) }}
                 onClick={() => setSelectedId(note.id)}
               >
-                <span className="note-icon"><AudioLines size={16} /></span>
+                <span className="note-icon"><Mic2 size={16} /></span>
                 <span className="note-row-copy"><span className="note-preview">{note.text.replace(/\s+/g, ' ')}</span><span className="note-row-meta">{formatDate(note.created_at)}<i />{Math.max(1, Math.round(note.duration))} sec</span></span>
                 <span className="note-row-actions">
-                  <span role="button" tabIndex={0} aria-label={note.is_starred ? 'Unstar note' : 'Star note'} className={`star-control ${note.is_starred ? 'starred' : ''}`} onClick={(event) => toggleStar(event, note)} onKeyDown={(event) => event.key === 'Enter' && toggleStar(event, note)}><Star size={15} /></span>
+                  <button type="button" aria-label={note.is_starred ? 'Unstar note' : 'Star note'} className={`star-control ${note.is_starred ? 'starred' : ''}`} onClick={(event) => toggleStar(event, note)}><Star size={15} /></button>
                 </span>
               </motion.button>
             ))}
@@ -172,7 +174,7 @@ function App() {
           {visibleNotes.length === 0 && (
             <motion.div className="empty-list" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="empty-glyph"><Mic2 size={21} /></div>
-              <strong>{query ? 'Nothing found' : view === 'starred' ? 'No starred notes yet' : 'A little room to think'}</strong>
+              <strong>{emptyNotesTitle}</strong>
               <span>{query ? 'Try another search.' : 'Your spoken notes will find a home here.'}</span>
             </motion.div>
           )}
@@ -195,7 +197,7 @@ function App() {
               </div>
               <div className="detail-date"><Clock3 size={14} />{formatFullDate(selectedNote.created_at)}<span className="date-divider" />{Math.max(1, Math.round(selectedNote.duration))} sec</div>
               <div className="transcript-text">{selectedNote.text}</div>
-              <div className="detail-footer"><span><Sparkles size={14} /> Captured with WhisperFlow</span><span>Stored privately on this Mac</span></div>
+              <div className="detail-footer"><span><Sparkles size={14} /> Captured with Joshua Notes</span><span>Stored privately on this Mac</span></div>
             </motion.article>
           ) : (
             <motion.div className="detail-empty" key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
