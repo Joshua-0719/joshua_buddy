@@ -122,11 +122,24 @@ Once packaging is stable, the project can move into a deeper "second brain" phas
 
 ## ⚠️ Known Gaps
 
-1. Confirm the renamed app opens from Finder/Spotlight and grant Accessibility permission; install path is `~/Applications` (not system `/Applications`).
+1. The app now starts correctly in the project ARM64 venv, but the global hotkey still needs macOS Accessibility permission before `⌥ Option + Space` will work reliably.
 2. Auto-start at login has not yet been implemented.
 3. First-run dependency setup and model loading should be smoother for non-technical users.
 4. The app still needs a final polished app icon and branding pass for a production-ready desktop experience.
-5. The direct terminal launch was valid, but a full user double-click launch from Finder should still be tested once the macOS permission prompt is accepted.
+5. The direct terminal launch was valid again after the runtime fix, and a final user double-click launch from Finder should still be tested once the macOS permission prompt is accepted.
+
+## 🔧 Runtime Fixes Applied
+
+- Replaced the undefined `AudioLines` icon in the React vault UI with the already-imported `Mic2` icon to remove the JavaScript crash that prevented the vault screen from rendering.
+- Repaired the stale x86_64 NumPy install in the local project venv by reinstalling the ARM64 wheel so the app now imports correctly on Apple Silicon.
+- Verified the app starts in the project environment again with:
+
+```bash
+cd /Users/mikey/Downloads/Web\ Tech/JoshuasNotes
+./venv/bin/python -m joshuasnotes.main
+```
+
+The app boots and logs the expected start-up message, with only the expected macOS Accessibility warning remaining until permission is granted.
 
 ---
 
