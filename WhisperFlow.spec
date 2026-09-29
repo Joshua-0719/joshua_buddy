@@ -66,7 +66,6 @@ bundle = BUNDLE(
     info_plist={
         "CFBundleDisplayName": "Joshua Notes",
         "CFBundleName": "Joshua Notes",
-        "LSUIElement": True,
         "NSMicrophoneUsageDescription": "Joshua Notes records audio while you dictate notes.",
         "NSAppleEventsUsageDescription": "Joshua Notes pastes transcribed text into the active app.",
     },

@@ -48,6 +48,8 @@ def main():
     
     # Show the Vault UI immediately on launch so the user can see it
     vault.show()
+    vault.raise_()
+    vault.activateWindow()
     
     # 5. Wire Signals -> Slots
     engine.state_changed.connect(hud.update_state)
