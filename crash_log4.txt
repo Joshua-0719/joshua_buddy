@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/mikey/Downloads/Web Tech/JoshuasNotes/joshuasnotes/main.py", line 67, in <module>
+    main()
+    ~~~~^^
+  File "/Users/mikey/Downloads/Web Tech/JoshuasNotes/joshuasnotes/main.py", line 52, in main
+    vault.setWindowState(vault.windowState() & ~__import__("PySide6.QtCore").Qt.WindowState.WindowMinimized | __import__("PySide6.QtCore").Qt.WindowState.WindowActive)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mikey/Downloads/Web Tech/JoshuasNotes/venv/lib/python3.13/site-packages/PySide6/__init__.py", line 127, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}' :)")
+AttributeError: module 'PySide6' has no attribute 'Qt' :)

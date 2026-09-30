@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 
-from PySide6.QtCore import QUrl
+from PySide6.QtCore import QUrl, Qt
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
@@ -12,6 +12,8 @@ class WebVaultWindow(QWebEngineView):
         self.setWindowTitle("Joshua Notes")
         self.resize(1180, 760)
         self.setMinimumSize(760, 560)
+        self.setWindowFlag(Qt.WindowType.Window, True)
+        self.setWindowFlag(Qt.WindowType.Sheet, False)
 
         self.channel = QWebChannel(self.page())
         self.channel.registerObject("desktop", bridge)

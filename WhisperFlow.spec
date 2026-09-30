@@ -4,7 +4,7 @@ from PyInstaller.utils.hooks import collect_all
 
 
 root = Path(SPECPATH)
-datas = [(str(root / "frontend" / "dist"), "frontend/dist")]
+datas = []
 binaries = []
 hiddenimports = [
     "mlx_whisper",
@@ -29,7 +29,11 @@ analysis = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=[
+        "PySide6.QtWebEngineCore",
+        "PySide6.QtWebEngineWidgets",
+        "PySide6.QtWebChannel",
+    ],
     noarchive=False,
     optimize=0,
 )
